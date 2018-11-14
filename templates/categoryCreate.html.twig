@@ -1,0 +1,16 @@
+{%  extends 'base.html.twig' %}
+
+{% block body %}
+
+    {{ form_start(formCategory) }}
+        {{ form_row(formCategory.name) }}
+        <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_end(formCategory) }}
+
+    {% for category in categories %}
+        <h1>{{ category.name }}</h1>
+
+
+    {% endfor %}
+
+{% endblock %}

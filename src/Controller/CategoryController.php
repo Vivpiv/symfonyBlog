@@ -9,7 +9,9 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Form\CategoryType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Category;
@@ -43,4 +45,34 @@ class CategoryController extends AbstractController
         return $this->render('categoryArticles.html.twig', ['categories' => $categories ]);
     }
     
+    /**
+     * @Route("/category", name="category_create")
+     * @return Response
+     */
+    public function category (Request $request)
+    {
+        $categories=$this->getDoctrine()
+            ->getRepository(Category::class)
+            ->findAll();
+    
+        if(!$categories) {
+            throw $this->createNotFoundException('No categorie found in categorie\'s table');
+        }
+    
+        $category = new Category();
+        $formCategory = $this->createForm(
+            CategoryType::class,
+            $category
+        );
+    
+        $formCategory->handleRequest($request);
+        if ($formCategory->isSubmitted()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($category);
+            $em->flush();
+            header('Location:/category');
+        }
+    
+        return $this->render('categoryCreate.html.twig', ['categories' => $categories, 'formCategory' => $formCategory->createView(), ]);
+    }
 }
