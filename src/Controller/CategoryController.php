@@ -70,7 +70,7 @@ class CategoryController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($category);
             $em->flush();
-            header('Location:/category');
+            return $this->redirectToRoute('category_create');
         }
     
         return $this->render('categoryCreate.html.twig', ['categories' => $categories, 'formCategory' => $formCategory->createView(), ]);
