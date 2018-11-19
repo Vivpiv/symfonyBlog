@@ -4,16 +4,16 @@
 
 
 {% block body %}
-    <h1>All articles from article s table : </h1>
+    <h1><strong>All articles from article s table : </strong></h1>
 
-    {{ form_start(form) }}
-        {{ form_row(form.searchField,{'label': 'contenu'}) }}
-        <button type="submit" name="btnSearch">Rechercher</button>
-    {{ form_end(form) }}
+    {#{{ form_start(form) }}#}
+        {#{{ form_row(form.searchField,{'label': 'contenu'}) }}#}
+        {#<button type="submit" name="btnSearch">Rechercher</button>#}
+    {#{{ form_end(form) }}#}
 
     {% for article in articles %}
         <div>
-            <h2>{{ loop.index }} / {{ article.title }} - Category : {{ article.category.name }}</h2>
+            <h5><u>{{ loop.index }} / {{ article.title }} - Category : {{ article.category.name }}</u></h5>
             <p>{{ article.content }}</p>
         </div>
     {% endfor %}
