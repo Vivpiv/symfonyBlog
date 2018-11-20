@@ -19,6 +19,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class ArticleController extends AbstractController
 {
     /**
+     * @Route("/article/{id}", name="article_show")
+     */
+    public function show(Article $article) :Response
+    {
+        $tags= $article->getTags();
+        return $this->render('article.html.twig', ['article'=>$article, 'tags' => $tags]);
+    }
+    
+    /**
      * @Route("/article", name="article")
      * @return Response
      */
@@ -47,6 +56,6 @@ class ArticleController extends AbstractController
             return $this->redirectToRoute('article');
         }
         
-        return $this->render('article.html.twig', ['articles' => $articles, 'form' => $form->createView(), ]);
+        return $this->render('articleCreate.html.twig', ['articles' => $articles, 'form' => $form->createView(), ]);
     }
 }
